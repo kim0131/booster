@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ad_banner {
+  idx              Int       @id @default(autoincrement())
+  title            String?   @db.VarChar(45)
+  image_url        String?   @db.VarChar(45)
+  posting_date     DateTime? @db.DateTime(0)
+  posting_exitdate DateTime? @db.DateTime(0)
+  background_color String?   @db.VarChar(45)
+  url              String?   @db.VarChar(45)
+  priority         Int?
+  open_tool        String?   @db.VarChar(45)
+}
+
+model board {
+  idx        Int     @id @unique(map: "idx_UNIQUE") @default(autoincrement())
+  bo_table   String? @db.VarChar(45)
+  gr_id      String? @db.VarChar(45)
+  bo_subject String? @db.VarChar(45)
+  sector     String? @db.VarChar(45)
+  priority   Int?
+  open       String? @db.VarChar(45)
+}
+
+model business {
+  idx                Int       @id @unique(map: "idx_UNIQUE") @default(autoincrement())
+  mb_idx             Int?
+  business_url       String?   @db.VarChar(45)
+  business_name      String?   @db.VarChar(45)
+  business_company   String?   @db.VarChar(45)
+  business_number    String?   @db.VarChar(45)
+  business_number2   String?   @db.VarChar(45)
+  business_address1  String?   @db.VarChar(45)
+  business_address2  String?   @db.VarChar(45)
+  business_telephone String?   @db.VarChar(45)
+  business_sector    String?   @db.VarChar(45)
+  business_status    String?   @db.VarChar(45)
+  business_datetime  DateTime? @default(now()) @db.DateTime(0)
+  business_update    DateTime? @db.DateTime(0)
+}
+
+model main_image {
+  idx              Int       @id @default(autoincrement())
+  title            String?   @db.VarChar(45)
+  subtitle         String?   @db.VarChar(45)
+  posting_date     DateTime? @db.DateTime(0)
+  posting_exitdate DateTime? @db.DateTime(0)
+  image_url        String?   @db.VarChar(45)
+  background_color String?   @db.VarChar(45)
+  url              String?   @db.VarChar(45)
+  priority         Int?
+  open_tool        String?   @db.VarChar(45)
+}
+
+model member {
+  idx                 Int       @id @unique(map: "idx_UNIQUE") @default(autoincrement())
+  mb_id               String    @unique @db.VarChar(45)
+  mb_email            String    @db.VarChar(45)
+  mb_name             String    @db.VarChar(45)
+  mb_nick             String?   @db.VarChar(20)
+  mb_ph               String    @db.VarChar(45)
+  mb_pw               String    @db.VarChar(500)
+  mb_pw_token         String    @db.VarChar(200)
+  mb_datetime         DateTime  @default(now()) @db.DateTime(0)
+  mb_update           DateTime? @db.DateTime(0)
+  mb_email_certify    String?   @db.VarChar(10)
+  mb_archive          DateTime? @db.DateTime(0)
+  mb_birth            DateTime? @db.DateTime(0)
+  mb_business_certify Int?
+  mb_business_num     Int?
+}
+
+model write_insight {
+  idx            Int       @id @default(autoincrement())
+  wr_parent      Int?
+  wr_parent2     Int?
+  wr_is_comment  Int?
+  wr_is_comment2 Int?
+  wr_subject     String?   @db.VarChar(45)
+  wr_content     String?   @db.VarChar(2000)
+  wr_view        Int?      @default(0)
+  wr_good        Int?      @default(0)
+  wr_datetime    DateTime? @default(now()) @db.DateTime(0)
+  wr_update      DateTime? @db.DateTime(0)
+  wr_ip          String?   @db.VarChar(45)
+  mb_id          String?   @db.VarChar(45)
+  mb_name        String?   @db.VarChar(45)
+  file_url       String?   @db.VarChar(500)
+  board          Int?
+}
+
+model write_insight_like {
+  idx         Int  @id @default(autoincrement())
+  member_idx  Int?
+  insight_idx Int?
+}
+
+model write_notice {
+  idx            Int       @id @default(autoincrement())
+  wr_parent      Int?
+  wr_is_comment  Int?
+  wr_is_comment2 Int?
+  wr_subject     String?   @db.VarChar(45)
+  wr_content     String?   @db.VarChar(2000)
+  wr_view        Int?      @default(0)
+  wr_good        Int?      @default(0)
+  wr_datetime    DateTime? @default(now()) @db.DateTime(0)
+  wr_update      DateTime? @db.DateTime(0)
+  wr_ip          Int?
+  mb_id          String?   @db.VarChar(45)
+  mb_name        String?   @db.VarChar(45)
+  mb_email       String?   @db.VarChar(45)
+  file_url       String?   @db.VarChar(500)
+}
+
+model write_scrap {
+  idx        Int     @id @default(autoincrement())
+  member_idx Int?
+  board_idx  Int?
+  sector     String? @db.VarChar(45)
+}
+
+model write_topic {
+  idx            Int       @id @default(autoincrement())
+  wr_parent      Int?
+  wr_parent2     Int?
+  wr_is_comment  Int?
+  wr_is_comment2 Int?
+  wr_subject     String?   @db.VarChar(45)
+  wr_content     String?   @db.VarChar(2000)
+  wr_view        Int?      @default(0)
+  wr_good        Int?      @default(0)
+  wr_datetime    DateTime? @default(now()) @db.DateTime(0)
+  wr_update      DateTime? @db.Timestamp(0)
+  wr_ip          String?   @db.VarChar(45)
+  mb_id          String?   @db.VarChar(45)
+  mb_name        String?   @db.VarChar(45)
+  mb_email       String?   @db.VarChar(45)
+  file_url       String?   @db.VarChar(500)
+  board          Int?
+}
+
+model write_topic_like {
+  idx        Int  @id @default(autoincrement())
+  member_idx Int
+  topic_idx  Int?
+}
+
+model insight_quill {
+  idx       Int     @id @default(autoincrement())
+  image_url String? @map("image-url") @db.VarChar(1000)
+}
